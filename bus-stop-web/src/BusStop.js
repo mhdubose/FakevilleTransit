@@ -35,7 +35,7 @@ class BusStop extends Component {
             ).then((data) => {
             let routes = data.busRoutes.map((route) => {
                 let routeString = this.getRouteString(route);
-                return <div>{routeString}</div>;
+                return <div key={route.id}>{routeString}</div>;
             },"");
             var timeout = null;
             if (this.props.shouldPoll) {
@@ -54,8 +54,10 @@ class BusStop extends Component {
 
     minutesUntilTime(time){
         let timeParts = time.split(':');
+        let hours = parseInt(timeParts[0], 10);
+        hours = hours === 0 ? 24 : hours;
         let current = new Date();
-        return (parseInt(timeParts[0],10) - current.getHours()) * 60 + parseInt(timeParts[1],10) - current.getMinutes();
+        return (hours - current.getHours()) * 60 + parseInt(timeParts[1],10) - current.getMinutes();
     }
 
     render() {

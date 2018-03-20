@@ -91,9 +91,10 @@ namespace BusStopService.Repositories
         }
 
         internal TimeSpan TimeSpanFromArrivalTime(TimeSpan currentTime, int arrivalTime){
-            var hours = arrivalTime / 60;
+            var hours = arrivalTime / 60 + currentTime.Hours;
+            hours = hours >= 24 ? hours-24 : hours;
             var minutes = arrivalTime % 60;
-            return new TimeSpan((currentTime.Hours + hours), minutes, 0);
+            return new TimeSpan(hours, minutes, 0);
         }
     }
 }
